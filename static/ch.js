@@ -1,36 +1,28 @@
-let age;
-let DIM;
+let DIM = 10;
+let maxiterations = 23;
+let targetDIM = 100; // Set the target dimension you want to transition to
+let targetMaxIterations = 50; // Set the target max iterations you want to transition to
+let transitionSpeed = 0.5; // Speed of the transition
 let mandelbulb = [];
-let size;
-
-// Function to fetch data and update variables
-function fetchData() {
-  fetch('/mushroom')
-    .then(response => response.json())
-    .then(data => {
-      size = 2.4 * 1/ data.size;
-      age = 256 * 1/ data.age;
-      DIM = age;
-      setup();
-    })
-    .catch(error => console.error(error));
-  console.log(DIM);
-}
+let transitioning = true;
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
   colorMode(RGB, 255);
-  orbitControl(); // Enables mouse drag rotation
+  orbitControl();
+  calculateMandelbulb(DIM, maxiterations); // Initial calculation
+}
 
+function calculateMandelbulb(DIM, maxiterations) {
+  mandelbulb = []; // Reset the array
   for (let i = 0; i < DIM; i++) {
     for (let j = 0; j < DIM; j++) {
       for (let k = 0; k < DIM; k++) {
-        let x = map(i, 0, DIM, -1, 1);
-        let y = map(j, 0, DIM, -1, 1);
-        let z = map(k, 0, DIM, -1, 1);
+        let x = map(i, 0, DIM, -2, 2);
+        let y = map(j, 0, DIM, -2, 2);
+        let z = map(k, 0, DIM, -2, 2);
         let zeta = createVector(0, 0, 0);
-        let n = size; // Adjusted for visual clarity
-        let maxiterations = 23; // Adjusted for performance and clarity
+        let n = 8; // This is a parameter that determines the "power" of the Mandelbulb
         let iteration = 0;
         while (true) {
           let c = spherical(zeta.x, zeta.y, zeta.z);
@@ -46,7 +38,7 @@ function setup() {
           }
         }
         if (iteration === maxiterations) {
-          mandelbulb.push(createVector(x * 100, y * 100, z * 100)); // Scale for visibility
+          mandelbulb.push(createVector(x, y, z));
         }
       }
     }
@@ -62,16 +54,50 @@ function spherical(x, y, z) {
 
 function draw() {
   background(0);
-
-  strokeWeight(1); 
-  stroke(255); // Set stroke to white for visibility
+  strokeWeight(0.1);
+  stroke(255);
   noFill();
 
-  
+  rotateX(-HALF_PI); // Rotate to make the Mandelbulb stand upright
+
+  // Render the Mandelbulb points
   beginShape(POINTS);
   for (let v of mandelbulb) {
-
     vertex(v.x, v.y, v.z);
   }
   endShape();
+
+  if (transitioning) {
+    updateValues();
+  }
 }
+
+function transitionToNewValues(newDIM, newMaxIterations) {
+  targetDIM = newDIM;
+  targetMaxIterations = newMaxIterations;
+  transitioning = true;
+}
+
+function updateValues() {
+  let needRecalculation = false;
+  // Use lerp to create a smooth transition for DIM
+  if (abs(DIM - targetDIM) > 0.1) {
+    DIM = lerp(DIM, targetDIM, transitionSpeed);
+    needRecalculation = true;
+  }
+  // Use lerp to create a smooth transition for maxiterations
+  if (abs(maxiterations - targetMaxIterations) > 0.1) {
+    maxiterations = lerp(maxiterations, targetMaxIterations, transitionSpeed);
+    needRecalculation = true;
+  }
+  
+  // Recalculate the Mandelbulb if needed
+  if (needRecalculation) {
+    calculateMandelbulb(floor(DIM), floor(maxiterations));
+  } else {
+    transitioning = false; // Stop transitioning once the target values are reached
+  }
+}
+
+// To initiate the transition, call the following function with your desired values:
+// transitionToNewValues(100, 50);

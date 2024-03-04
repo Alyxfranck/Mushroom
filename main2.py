@@ -22,7 +22,7 @@ class Mushroom:
         Mushroom.id_counter += 1
         self.age = 0
         self.dead = False
-        self.size = 1
+        self.size = 0.1
         self.growth_factor = 0
         
     def update(self):
