@@ -3,19 +3,22 @@ let DIM;
 let mandelbulb = [];
 let size;
 
-
-fetch('/mushroom')
-  .then(response => response.json())
-  .then(data => {
-    size = data.size;
-    age = data.age;
-    DIM = age;
-    setup();
-  })
-  .catch(error => console.error(error));
+// Function to fetch data and update variables
+function fetchData() {
+  fetch('/mushroom')
+    .then(response => response.json())
+    .then(data => {
+      size = 2.4 * 1/ data.size;
+      age = 256 * 1/ data.age;
+      DIM = age;
+      setup();
+    })
+    .catch(error => console.error(error));
   console.log(DIM);
+}
+
 function setup() {
-  createCanvas(500, 500, WEBGL);
+  createCanvas(windowWidth, windowHeight, WEBGL);
   colorMode(RGB, 255);
   orbitControl(); // Enables mouse drag rotation
 
@@ -64,12 +67,9 @@ function draw() {
   stroke(255); // Set stroke to white for visibility
   noFill();
 
-  // Draw each point in the Mandelbulb
+  
   beginShape(POINTS);
   for (let v of mandelbulb) {
-    let red = map(v.x, -1, 1, 0, 255);
-    let green = map(v.y, -1, 1, 0, 255);
-    let blue = map(v.z, -1, 1, 0, 255);
 
     vertex(v.x, v.y, v.z);
   }

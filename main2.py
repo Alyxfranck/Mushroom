@@ -133,21 +133,20 @@ def main():
     
     while True:
         
-        print("-" * 100)
-        print(f"{'Mushroom Name':<15} | {'Country':<10} | {'Status':<10} | {'Size':<10} | {'Age':<10} | {'Growth Factor':<15}")
-        print("-" * 100)  # Print a dividing line for clarity
-        
+       # print("-" * 100)    
+       # print(f"{'Mushroom Name':<15} | {'Country':<10} | {'Status':<10} | {'Size':<10} | {'Age':<10} | {'Growth Factor':<15}")
+       
         for mushroom in mushrooms:
             weather_data = get_weather(weather_api_key, mushroom.location)
             if weather_data:
                 apply_weather(mushroom, weather_data)
                 country = weather_data.get('sys', {}).get('country', 'Unknown')
                 status = 'dead' if mushroom.dead else 'alive'
-                size = f"{ 2.5 *1/mushroom.size:.2f}"  # Format size to two decimal places
+                size = f"{ mushroom.size:.2f}"  # Format size to two decimal places
                 age = mushroom.age 
                 growth_factor = f"{mushroom.growth_factor:.2f}"
        
-        print(f"{mushroom.name:<15} | {country:<10} | {status:<10} | {size:<10} | {age:<10} | {growth_factor:<15}")
+        #print(f"{mushroom.name:<15} | {country:<10} | {status:<10} | {size:<10} | {age:<10} | {growth_factor:<15}")
         
         export_mushroom_data(mushrooms, "static/data.json")
 
