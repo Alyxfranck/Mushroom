@@ -87,8 +87,8 @@ def apply_weather(mushroom, weather_data):
     random_factor = random.uniform(0.8, 1.2)
 
     # Calculate growth factor with non-linear interactions
-    mushroom.growth_factor = (temp_factor * humidity_factor * cloud_factor * wind_factor * rain_factor * random_factor)
-  
+    mushroom.growth_factor = (temp_factor * humidity_factor * cloud_factor * wind_factor * rain_factor * random_factor)  
+
     # Update mushroom's size and age
     mushroom.update()
 

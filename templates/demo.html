@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mandelbulb in Three.js</title>
+    <style>
+        body { margin: 0; background-color: black; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script type="module" src="https://threejs.org/examples/jsm/controls/OrbitControls.js"></script>
+<script type="module">
+
+import * as THREE from 'https://threejs.org/build/three.module.js';
+import { OrbitControls } from 'https://threejs.org/examples/jsm/controls/OrbitControls.js';
+let scene = new THREE.Scene();
+let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+let renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+camera.position.z = 400;
+
+// OrbitControls for camera manipulation
+const controls = new OrbitControls(camera, renderer.domElement);
+
+// Mandelbulb generation parameters
+let DIM = 10; // Dimension of the sample space
+let maxiterations = 5; // Max iterations for the Mandelbulb equation
+let escape = 4; // Escape radius
+let n = 2; // Power of the Mandelbulb
+
+function spherical(x, y, z) {
+    let r = Math.sqrt(x*x + y*y + z*z);
+    return {
+        r: r,
+        theta: Math.atan2(Math.sqrt(x*x + y*y), z),
+        phi: Math.atan2(y, x)
+    };
+}
+
+function generateMandelbulb() {
+    let geometry = new THREE.Geometry();
+
+    for (let i = 0; i < DIM; i++) {
+        for (let j = 0; j < DIM; j++) {
+            for (let k = 0; k < DIM; k++) {
+                let x = (i / DIM) * 2 - 1;
+                let y = (j / DIM) * 2 - 1;
+                let z = (k / DIM) * 2 - 1;
+                let c = spherical(x, y, z);
+                let zeta = { x: 0, y: 0, z: 0 };
+                let iteration = 0;
+                while (true) {
+                    c = spherical(zeta.x, zeta.y, zeta.z);
+                    if (c.r > escape || iteration >= maxiterations) break;
+                    let newx = Math.pow(c.r, n) * Math.sin(c.theta * n) * Math.cos(c.phi * n) + x;
+                    let newy = Math.pow(c.r, n) * Math.sin(c.theta * n) * Math.sin(c.phi * n) + y;
+                    let newz = Math.pow(c.r, n) * Math.cos(c.theta * n) + z;
+                    zeta.x = newx;
+                    zeta.y = newy;
+                    zeta.z = newz;
+                    iteration++;
+                }
+                if (iteration < maxiterations) {
+                    geometry.vertices.push(new THREE.Vector3(x * 100, y * 100, z * 100));
+                }
+            }
+        }
+    }
+    return geometry;
+}
+
+function createMandelbulb() {
+    let geometry = generateMandelbulb();
+    let material = new THREE.PointsMaterial({ color: 0xffffff, size: 0.5 });
+    let mandelbulb = new THREE.Points(geometry, material);
+    scene.add(mandelbulb);
+}
+init();
+createMandelbulb();
+
+// Add a directional light to the scene
+let light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(1, 1, 1);
+scene.add(light);
+
+function animate() {
+    requestAnimationFrame(animate);
+    controls.update();
+    renderer.render(scene, camera);
+}
+
+animate();
+</script>
+</body>
+</html>

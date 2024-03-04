@@ -1,10 +1,15 @@
-from flask import Flask 
+
+from flask import Flask, render_template, jsonify
 import json
 import threading
 from main2 import main as main2_main
 
 app = Flask(__name__)
+@app.route('/')
+def home():
+    return render_template('ch.html')
 
+ 
 @app.route('/mushrooms')
 def get_mushrooms():
     try:
@@ -23,7 +28,7 @@ if __name__ == '__main__':
     thread.daemon = True  
     thread.start()
 
-
 # Start the Flask app
 app.run(debug=True)
 
+ 
