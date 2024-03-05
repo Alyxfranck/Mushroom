@@ -1,15 +1,16 @@
-let DIM = 10;
-let maxiterations = 23;
-let targetDIM = 100; // Set the target dimension you want to transition to
-let targetMaxIterations = 50; // Set the target max iterations you want to transition to
-let transitionSpeed = 0.5; // Speed of the transition
+let DIM = 5;
+let maxiterations = 3;
+let targetDIM = 256; // Set the target dimension you want to transition to
+let targetMaxIterations = 25; // Set the target max iterations you want to transition to
+let transitionSpeed = 0.0001; // Speed of the transition
 let mandelbulb = [];
 let transitioning = true;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight, WEBGL);
+  const canvas = createCanvas(800, 500, WEBGL);
+  canvas.style('display', 'block');
+  canvas.position((windowWidth - width) / 2, (windowHeight - height) / 2);
   colorMode(RGB, 255);
-  orbitControl();
   calculateMandelbulb(DIM, maxiterations); // Initial calculation
 }
 
@@ -22,8 +23,8 @@ function calculateMandelbulb(DIM, maxiterations) {
         let y = map(j, 0, DIM, -2, 2);
         let z = map(k, 0, DIM, -2, 2);
         let zeta = createVector(0, 0, 0);
-        let n = 8; // This is a parameter that determines the "power" of the Mandelbulb
-        let iteration = 0;
+        let n = 2; // This is a parameter that determines the "power" of the Mandelbulb
+        let iteration = 3;
         while (true) {
           let c = spherical(zeta.x, zeta.y, zeta.z);
           let newx = pow(c.r, n) * sin(c.theta * n) * cos(c.phi * n);
@@ -38,7 +39,7 @@ function calculateMandelbulb(DIM, maxiterations) {
           }
         }
         if (iteration === maxiterations) {
-          mandelbulb.push(createVector(x, y, z));
+          mandelbulb.push(createVector(x * 100, y * 100, z * 100)); // Scale for visibility
         }
       }
     }
@@ -54,11 +55,12 @@ function spherical(x, y, z) {
 
 function draw() {
   background(0);
-  strokeWeight(0.1);
+  strokeWeight(0.2);
   stroke(255);
   noFill();
 
-  rotateX(-HALF_PI); // Rotate to make the Mandelbulb stand upright
+  rotateX(HALF_PI); // Rotate to make the Mandelbulb stand upright
+  rotateZ(frameCount * 0.002); // Add rotation around the Y-axis
 
   // Render the Mandelbulb points
   beginShape(POINTS);
@@ -95,7 +97,7 @@ function updateValues() {
   if (needRecalculation) {
     calculateMandelbulb(floor(DIM), floor(maxiterations));
   } else {
-    transitioning = false; // Stop transitioning once the target values are reached
+    transitioning = true; // Stop transitioning once the target values are reached
   }
 }
 

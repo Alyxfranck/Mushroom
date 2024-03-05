@@ -17,7 +17,7 @@ void setup() {
         float y = map(j, 0, DIM, -1, 1);
         float z = map(k, 0, DIM, -1, 1);
         PVector zeta = new PVector(0, 0, 0);
-        float n = 2.32243432424;
+        float n = 2.5;
         int maxiterations = 200;
         int iteration = 0;
         while (true) {
@@ -91,8 +91,8 @@ void drawAxes(float length) {
 }
 void draw() {
   background(0);
-  rotateX(-200);  
-  drawAxes(500);
+  rotateX(HALF_PI);  
+ 
 
 
   for (PVector v : mandelbulb) {

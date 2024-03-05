@@ -9,7 +9,10 @@ app = Flask(__name__)
 def home():
     return render_template('ch.html')
 
- 
+@app.route('/working') 
+def working():
+    return render_template('working.html')
+
 @app.route('/mushrooms')
 def get_mushrooms():
     try:
