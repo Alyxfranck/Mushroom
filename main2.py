@@ -1,5 +1,4 @@
-# Python mushroom calculator 
-
+# color calculation 
 import time
 import uuid
 import requests
@@ -17,13 +16,13 @@ class Mushroom:
     def __init__(self, name, location, description):
         self.name = name
         self.location = location
-        self.description = description
         self.id = Mushroom.id_counter
         Mushroom.id_counter += 1
         self.age = 0
         self.dead = False
         self.size = 0.1
         self.growth_factor = 0
+        self.color = None
         
     def update(self):
         if not self.dead:
@@ -88,9 +87,25 @@ def apply_weather(mushroom, weather_data):
 
     # Calculate growth factor with non-linear interactions
     mushroom.growth_factor = (temp_factor * humidity_factor * cloud_factor * wind_factor * rain_factor * random_factor)  
+    
+    color_hex = generate_color_hex(mushroom.size)
+
+    mushroom.color = color_hex
 
     # Update mushroom's size and age
     mushroom.update()
+
+def generate_color_hex(size):
+    # Define the range of sizes and corresponding color hex codes
+    size_range = [(0, "#FF0000"), (0.5, "#FFFF00"), (1, "#00FF00"), (1.5, "#0000FF")]
+
+    # Find the appropriate color hex code based on the size
+    for i in range(len(size_range)):
+        if size < size_range[i][0]:
+            return size_range[i][1]
+
+    # Return the last color hex code if the size is greater than the largest size in the range
+    return size_range[-1][1]
 
 def get_weather(api_key, location):
     lat, lon = location
@@ -147,6 +162,8 @@ def main():
                 growth_factor = f"{mushroom.growth_factor:.2f}"
        
         #print(f"{mushroom.name:<15} | {country:<10} | {status:<10} | {size:<10} | {age:<10} | {growth_factor:<15}")
+        
+        print(mushroom.color, mushroom.size)
         
         export_mushroom_data(mushrooms, "static/data.json")
 

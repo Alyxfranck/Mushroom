@@ -1,13 +1,13 @@
-let DIM = 5;
-let maxiterations = 3;
+let DIM = 3;
+let maxiterations = 2;
 let targetDIM = 256; // Set the target dimension you want to transition to
 let targetMaxIterations = 25; // Set the target max iterations you want to transition to
-let transitionSpeed = 0.0001; // Speed of the transition
+let transitionSpeed = 0.01; // Speed of the transition
 let mandelbulb = [];
 let transitioning = true;
 
 function setup() {
-  const canvas = createCanvas(800, 500, WEBGL);
+  const canvas = createCanvas(800, 600, WEBGL);
   canvas.style('display', 'block');
   canvas.position((windowWidth - width) / 2, (windowHeight - height) / 2);
   colorMode(RGB, 255);
@@ -23,8 +23,8 @@ function calculateMandelbulb(DIM, maxiterations) {
         let y = map(j, 0, DIM, -2, 2);
         let z = map(k, 0, DIM, -2, 2);
         let zeta = createVector(0, 0, 0);
-        let n = 2; // This is a parameter that determines the "power" of the Mandelbulb
-        let iteration = 3;
+        let n = 2.4 ; // This is a parameter that determines the "power" of the Mandelbulb
+        let iteration = 0;
         while (true) {
           let c = spherical(zeta.x, zeta.y, zeta.z);
           let newx = pow(c.r, n) * sin(c.theta * n) * cos(c.phi * n);
@@ -53,9 +53,10 @@ function spherical(x, y, z) {
   return { r, theta, phi };
 }
 
+
 function draw() {
   background(0);
-  strokeWeight(0.2);
+  strokeWeight(0.8);
   stroke(255);
   noFill();
 
