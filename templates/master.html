@@ -11,13 +11,46 @@
             font-family: Arial, sans-serif;
             color:white;
         }
+        p {
+            font-family: Arial, sans-serif;
+            color: white;
+        }
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
 </head>
 <body>
-    <h2>Mandelshroom</h2>
+    <h2>Mandelshroom Tokyo</h2>
 
-    <script src="static/master.js"></script>
+    <script src="static/"></script>
+
+    <script>
+        fetch('/mushrooms')
+            .then(response => response.json())
+            .then(data => {
+                const mushroom = data[1];
+                const age = mushroom.age;
+                const color = mushroom.color;
+                const location = mushroom.location;
+                const dead = mushroom.dead;
+
+                const ageElement = document.createElement('p');
+                ageElement.textContent = `Age: ${age}`;
+
+                const colorElement = document.createElement('p');
+                colorElement.textContent = `Color: ${color}`;
+
+                const locationElement = document.createElement('p');
+                locationElement.textContent = `Location: ${location[0]}, ${location[1]}`;
+
+                const deadElement = document.createElement('p');
+                deadElement.textContent = `Dead: ${dead}`;
+
+                document.body.appendChild(ageElement);
+                document.body.appendChild(colorElement);
+                document.body.appendChild(locationElement);
+                ageElement.appendChild(deadElement);
+            });
+    </script>
 </body>
 </html>

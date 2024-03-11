@@ -125,7 +125,7 @@ def load_config():
     weather_api_key = config["WEATHER"]["API_KEY"]
 
     locations = []
-    for i in range(1, 2):
+    for i in range(1, 7):
         lat = config.getfloat('WEATHER', f"LAT_{i}")
         lon = config.getfloat('WEATHER', f"LON_{i}")
         locations.append((lat, lon))

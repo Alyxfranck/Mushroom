@@ -7,11 +7,40 @@ from main2 import main as main2_main
 app = Flask(__name__)
 @app.route('/')
 def home():
+    return render_template('home.html')
+
+@app.route('/master') 
+def working():
+    return render_template('Master.html')
+
+@app.route('/ch')
+def ch():
     return render_template('ch.html')
 
-@app.route('/working') 
-def working():
-    return render_template('working.html')
+@app.route('/tokyo')
+def tokyo():
+    return render_template('tokyo.html')
+
+@app.route('/north_america')
+def north_america():
+    return render_template('north_america.html')
+
+@app.route('/south_america')
+def south_america():
+    return render_template('south_america.html')
+
+@app.route('/africa')
+def africa():
+    return render_template('africa.html')
+
+@app.route('/australia')
+def australia():
+    return render_template('australia.html')
+
+@app.route('/antarctica')
+def antarctica():
+    return render_template('antarctica.html')
+
 
 @app.route('/mushrooms')
 def get_mushrooms():
