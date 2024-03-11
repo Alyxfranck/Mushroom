@@ -97,14 +97,14 @@ def apply_weather(mushroom, weather_data):
 
 def generate_color_hex(size):
     # Define the range of sizes and corresponding color hex codes
-    size_range = [(0, "#FF0000"), (0.5, "#FFFF00"), (1, "#00FF00"), (1.5, "#0000FF")]
+    size_range = [(i/2, f"#{uuid.uuid4().hex[:6]}") for i in range(11)]
 
     # Find the appropriate color hex code based on the size
     for i in range(len(size_range)):
         if size < size_range[i][0]:
             return size_range[i][1]
 
-    # Return the last color hex code if the size is greater than the largest size in the range
+    
     return size_range[-1][1]
 
 def get_weather(api_key, location):
@@ -125,7 +125,7 @@ def load_config():
     weather_api_key = config["WEATHER"]["API_KEY"]
 
     locations = []
-    for i in range(1, 7):
+    for i in range(0, 6):
         lat = config.getfloat('WEATHER', f"LAT_{i}")
         lon = config.getfloat('WEATHER', f"LON_{i}")
         locations.append((lat, lon))
@@ -163,11 +163,11 @@ def main():
        
         #print(f"{mushroom.name:<15} | {country:<10} | {status:<10} | {size:<10} | {age:<10} | {growth_factor:<15}")
         
-        print(mushroom.color, mushroom.size)
+        print(mushroom.name, mushroom.color, mushroom.size)
         
-        export_mushroom_data(mushrooms, "static/data.json")
+        export_mushroom_data(mushrooms, "data/data.json")
 
-        time.sleep(5)
+        time.sleep(10)
 
 if __name__ == "__main__":
 

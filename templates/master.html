@@ -22,35 +22,45 @@
 <body>
     <h2>Mandelshroom Tokyo</h2>
 
-    <script src="static/"></script>
-
+    <script src="static/master.js"></script>
     <script>
-        fetch('/mushrooms')
-            .then(response => response.json())
-            .then(data => {
-                const mushroom = data[1];
-                const age = mushroom.age;
-                const color = mushroom.color;
-                const location = mushroom.location;
-                const dead = mushroom.dead;
-
-                const ageElement = document.createElement('p');
-                ageElement.textContent = `Age: ${age}`;
-
-                const colorElement = document.createElement('p');
-                colorElement.textContent = `Color: ${color}`;
-
-                const locationElement = document.createElement('p');
-                locationElement.textContent = `Location: ${location[0]}, ${location[1]}`;
-
-                const deadElement = document.createElement('p');
-                deadElement.textContent = `Dead: ${dead}`;
-
-                document.body.appendChild(ageElement);
-                document.body.appendChild(colorElement);
-                document.body.appendChild(locationElement);
-                ageElement.appendChild(deadElement);
-            });
+        // Create elements once and append them to the body
+        const ageElement = document.createElement('p');
+        ageElement.id = 'ageElement';
+        document.body.appendChild(ageElement);
+    
+        const colorElement = document.createElement('p');
+        colorElement.id = 'colorElement';
+        document.body.appendChild(colorElement);
+    
+        const locationElement = document.createElement('p');
+        locationElement.id = 'locationElement';
+        document.body.appendChild(locationElement);
+    
+        const deadElement = document.createElement('p');
+        deadElement.id = 'deadElement';
+        ageElement.appendChild(deadElement);
+    
+        function fetchData() {
+            fetch('/mushrooms')
+                .then(response => response.json())
+                .then(data => {
+                    const mushroom = data[1];
+                    const age = mushroom.age;
+                    const color = mushroom.color;
+                    const location = mushroom.location;
+                    const dead = mushroom.dead;
+    
+                    // Update the textContent of the existing elements
+                    document.getElementById('ageElement').textContent = `Age: ${age}`;
+                    document.getElementById('colorElement').textContent = `Color: ${color}`;
+                    document.getElementById('locationElement').textContent = `Location: ${location[0]}, ${location[1]}`;
+                    document.getElementById('deadElement').textContent = `Dead: ${dead}`;
+                });
+        }
+    
+        // Fetch data every second
+        setInterval(fetchData, 1000);
     </script>
 </body>
-</html>
+</html> 

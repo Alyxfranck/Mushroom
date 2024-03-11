@@ -1,10 +1,105 @@
-<HTML>
-    <HEAD>
-        <TITLE>Home</TITLE>
-    </HEAD>
-    <BODY>
-        <H1>Home</H1>
-        <P>Welcome to the home page.</P>
-    </BODY>
-    
-</HTML>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mandelshroom</title>
+    <style>
+        body {
+            font-family: 'San Francisco', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #333;
+            color: #f7f7f7;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            background: #333;
+            padding: 1em 2em;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar img {
+            height: 40px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4em 0;
+            background: url('your-hero-image.jpg') no-repeat center center;
+            background-size: cover;
+        }
+
+        .hero h1 {
+            color: #f7f7f7;
+            font-size: 3em;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1em;
+            padding: 2em;
+        }
+
+        .grid a {
+            display: block;
+            background: #333;
+            padding: 2em;
+            text-align: center;
+            text-decoration: none;
+            color: #f7f7f7;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .grid a:hover {
+            transform: translateY(-5px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2em 0;
+            font-size: 0.8em;
+            color: #f7f7f7;
+        }
+
+        .dark-mode footer {
+            color: #712424;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="hero">
+        <h1>Welcome to Global Hub</h1>
+    </div>
+
+    <div class="grid">
+        <a href="/ch">Switzerland</a>
+        <a href="/tokyo">Tokyo</a>
+        <a href="/north_america">North America</a>
+        <a href="/south_america">South America</a>
+        <a href="/africa">Africa</a>
+        <a href="/australia">Australia</a>
+        <a href="/antarctica">Antarctica</a>
+    </div>
+
+    <footer>
+        &copy; 2024 Mendelshroom . All rights reserved.
+    </footer>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+
+</body>
+
+</html>

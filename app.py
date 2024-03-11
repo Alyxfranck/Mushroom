@@ -45,7 +45,7 @@ def antarctica():
 @app.route('/mushrooms')
 def get_mushrooms():
     try:
-        with open('static/data.json', 'r') as file:
+        with open('data/data.json', 'r') as file:
             mushrooms = json.load(file)
         return jsonify(mushrooms)
     except Exception as e:

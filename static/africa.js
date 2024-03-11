@@ -60,7 +60,7 @@ function draw() {
     .then(response => response.json())
     .then(data => {
       // Extract the color value from the JSON data
-      let color = data[0].color;
+      let color = data[3].color;
 
       // Set the stroke color based on the fetched color value
       stroke(color);

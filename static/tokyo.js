@@ -3,12 +3,12 @@ let DIM = 3;
 let maxiterations = 2;
 let targetDIM = 256; // Set the target dimension you want to transition to
 let targetMaxIterations = 25; // Set the target max iterations you want to transition to
-let transitionSpeed = 0.0000001; // Speed of the transition
+let transitionSpeed = 0.00001; // Speed of the transition
 let mandelbulb = [];
 let transitioning = true;
 
 function setup() {
-  const canvas = createCanvas(800, 600, WEBGL);
+  const canvas = createCanvas(800, 800, WEBGL);
   canvas.style('display', 'block');
   canvas.position((windowWidth - width) / 2, (windowHeight - height) / 2);
  
@@ -60,7 +60,7 @@ function draw() {
     .then(response => response.json())
     .then(data => {
       // Extract the color value from the JSON data
-      let color = data[0].color;
+      let color = data[4].color;
 
       // Set the stroke color based on the fetched color value
       stroke(color);
@@ -79,7 +79,7 @@ function draw() {
  
 
   rotateX(HALF_PI); // Rotate to make the Mandelbulb stand upright
-  rotateZ(frameCount * 0.002); // Add rotation around the Y-axis
+  rotateZ(frameCount * 0.2); // Add rotation around the Y-axis
 
   // Render the Mandelbulb points
   beginShape(POINTS);

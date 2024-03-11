@@ -25,8 +25,8 @@
 
 <body>
     <h2>Mandelshroom</h2>
-    <p>Location: Biel, Switzerland</p>
-    <script src="static/ch.js"></script>
+    <p>Location: McMurdo Station, Antarctica</p>
+    <script src="static/antarctica.js"></script>
     <script>
         // Create elements once and append them to the body
         const ageElement = document.createElement('p');
@@ -45,7 +45,7 @@
             fetch('/mushrooms')
                 .then(response => response.json())
                 .then(data => {
-                    const mushroom = data[0];
+                    const mushroom = data[5];
                     const age = mushroom.age;
                     const color = mushroom.color;
                     const location = mushroom.location;
@@ -61,6 +61,7 @@
         // Fetch data every second
         setInterval(fetchData, 1000);
     </script>
+   
 </body>
 
 </html>
