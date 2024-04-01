@@ -2,12 +2,11 @@
 <html>
 
 <head>
-    <title>Mandelshroom</title>
+    <title>Antarctica</title>
 
     <style>
         body {
             background-color: black;
-            /* Replace #000000 with your desired background color */
         }
 
         h2 {
@@ -25,22 +24,22 @@
 
 <body>
     <h2>Mandelshroom</h2>
-    <p>Location: McMurdo Station, Antarctica</p>
+    <p>Location: Biel, Switzerland</p>
     <script src="static/antarctica.js"></script>
     <script>
         // Create elements once and append them to the body
         const ageElement = document.createElement('p');
         ageElement.id = 'ageElement';
         document.body.appendChild(ageElement);
-    
+
         const colorElement = document.createElement('p');
         colorElement.id = 'colorElement';
         document.body.appendChild(colorElement);
-    
+
         const deadElement = document.createElement('p');
         deadElement.id = 'deadElement';
         ageElement.appendChild(deadElement);
-    
+
         function fetchData() {
             fetch('/mushrooms')
                 .then(response => response.json())
@@ -50,18 +49,15 @@
                     const color = mushroom.color;
                     const location = mushroom.location;
                     const dead = mushroom.dead;
-    
-                    // Update the textContent of the existing elements
                     document.getElementById('ageElement').textContent = `Age: ${age}`;
                     document.getElementById('colorElement').textContent = `Color: ${color}`;
                     document.getElementById('deadElement').textContent = `Dead: ${dead}`;
                 });
         }
-    
-        // Fetch data every second
-        setInterval(fetchData, 1000);
+
+        // Fetch data every 10 seconds
+        setInterval(fetchData, 10000);
     </script>
-   
 </body>
 
 </html>

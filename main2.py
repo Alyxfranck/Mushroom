@@ -125,7 +125,7 @@ def load_config():
     weather_api_key = config["WEATHER"]["API_KEY"]
 
     locations = []
-    for i in range(0, 6):
+    for i in range(1, 7):
         lat = config.getfloat('WEATHER', f"LAT_{i}")
         lon = config.getfloat('WEATHER', f"LON_{i}")
         locations.append((lat, lon))
@@ -163,7 +163,7 @@ def main():
        
         #print(f"{mushroom.name:<15} | {country:<10} | {status:<10} | {size:<10} | {age:<10} | {growth_factor:<15}")
         
-        print(mushroom.name, mushroom.color, mushroom.size)
+        #print(mushroom.name, mushroom.color, mushroom.size)
         
         export_mushroom_data(mushrooms, "data/data.json")
 

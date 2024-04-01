@@ -1,4 +1,4 @@
-
+# server side code for the web application
 from flask import Flask, render_template, jsonify
 import json
 import threading
