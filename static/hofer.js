@@ -1,14 +1,10 @@
 
-
 // Master Object
 
-
-let DIM = 3;
-let maxiterations = 3;
-let targetDIM = 180; 
-let targetMaxIterations = 10; 
-let transitionSpeed = 0.01; 
+let iteration = 0;
+let DIM = 50;
 let mandelbulb = [];
+let maxiterations = 15; 
 
 function setup() {
   const canvas = createCanvas(windowWidth - width, windowHeight - height, WEBGL);
@@ -28,7 +24,7 @@ function calculateMandelbulb(DIM, maxiterations) {
         let z = map(k, 0, DIM, -2, 2);
         let zeta = createVector(0, 0, 0);
         let n = 2.; 
-        let iteration = 3;
+        let iterations = 8;
         while (true) {
           let c = spherical(zeta.x, zeta.y, zeta.z);
           let newx = pow(c.r, n) * sin(c.theta * n) * cos(c.phi * n);
@@ -57,12 +53,10 @@ function spherical(x, y, z) {
   return { r, theta, phi };
 }
 
-let t0 = performance.now();
-
 function draw() {
-  const t = performance.now();
+
   background(0);
-  strokeWeight(0.1);
+  strokeWeight(1);
   stroke(255);
   noFill();
   rotateX(HALF_PI); // Rotate to make the Mandelbulb stand upright
@@ -72,37 +66,5 @@ function draw() {
     vertex(v.x, v.y, v.z);
   }
   endShape();
-  if (transitioning) {
-    if (t - t0 > 3000) {
-      console.log("redraw", performance.now() - t0);
-      t0 = t;
-      updateValues();
-    }
-  }
-}
 
-function transitionToNewValues(newDIM, newMaxIterations) {
-  targetDIM = newDIM;
-  targetMaxIterations = newMaxIterations;
-  transitioning = true;
 }
-
-function updateValues() {
-  let needRecalculation = false;
-  if (abs(DIM - targetDIM) > 0.1) {
-    DIM = lerp(DIM, targetDIM, transitionSpeed);
-    needRecalculation = true;
-  }
-  if (abs(maxiterations - targetMaxIterations) > 0.1) {
-    maxiterations = lerp(maxiterations, targetMaxIterations, transitionSpeed);
-    needRecalculation = true;
-  }
-  
-  if (needRecalculation) {
-    calculateMandelbulb(floor(DIM), floor(maxiterations));
-  } else {
-    transitioning = true; 
-  }
-}
-
-transitionToNewValues(100, 50);

@@ -1,18 +1,21 @@
+
+// Modified {CH} Object
+
 let DIM = 3;
-let maxiterations = 2;
-let targetDIM = 256; 
-let targetMaxIterations = 25; 
-let transitionSpeed = 0.001; 
+let maxiterations = 3;
+let targetDIM = 180; 
+let targetMaxIterations = 10; 
+let transitionSpeed = 1; 
 let mandelbulb = [];
-let transitioning = true
+let transitioning = true;
 
 function setup() {
-  const canvas = createCanvas(800, 600, WEBGL);
+  const canvas = createCanvas(windowWidth- width, windowHeight - height , WEBGL);
   canvas.style('display', 'block');
   canvas.position((windowWidth - width) / 2, (windowHeight - height) / 2);
- 
-  calculateMandelbulb(DIM, maxiterations); 
+  calculateMandelbulb(DIM, maxiterations); // Initial calculation
 }
+
 
 function calculateMandelbulb(DIM, maxiterations) {
   mandelbulb = []; // Reset the array
@@ -23,8 +26,8 @@ function calculateMandelbulb(DIM, maxiterations) {
         let y = map(j, 0, DIM, -2, 2);
         let z = map(k, 0, DIM, -2, 2);
         let zeta = createVector(0, 0, 0);
-        let n = 2.2 ; 
-        let iteration = 0;
+        let n = 2.; 
+        let iteration = 3;
         while (true) {
           let c = spherical(zeta.x, zeta.y, zeta.z);
           let newx = pow(c.r, n) * sin(c.theta * n) * cos(c.phi * n);
@@ -54,26 +57,26 @@ function spherical(x, y, z) {
 }
 
 function draw() {
-   fetch('http://127.0.0.1:5000/mushrooms') 
+  background(0);
+  strokeWeight(0.01);
+  noFill();
+  rotateX(HALF_PI); // Rotate to make the Mandelbulb stand upright
+  rotateZ(frameCount * 0.005 ); // Add rotation around the Y-axis
+ 
+ fetch('http://127.0.0.1:5000/mushrooms') 
     .then(response => response.json())
     .then(data => {
-      let color = data[0].color;
-      stroke(color);
-      strokeWeight(0.2);
-    })
-    .catch(error => {
-      console.error('Error fetching JSON:', error);
+        let newColor = data[0].color;
+        if (newColor !== color) {
+            transitioning = true;
+            color = newColor;
+        }
     });
-    
-  rotateX(HALF_PI); // Rotate to make the Mandelbulb stand upright
-  rotateZ(frameCount * 0.0002); // Add rotation around the Y-axis
-  
-  beginShape(POINTS);
+
   for (let v of mandelbulb) {
-       vertex(v.x, v.y, v.z);
-    }
-  
-    endShape();
+    vertex(v.x, v.y, v.z);
+  }
+  endShape();
   if (transitioning) {
     updateValues();
   }
@@ -87,22 +90,20 @@ function transitionToNewValues(newDIM, newMaxIterations) {
 
 function updateValues() {
   let needRecalculation = false;
-  if (abs(DIM - targetDIM) > 0.01) {
+  if (abs(DIM - targetDIM) > 0.1) {
     DIM = lerp(DIM, targetDIM, transitionSpeed);
     needRecalculation = true;
   }
-
-  if (abs(maxiterations - targetMaxIterations) > 0.01) {
+  if (abs(maxiterations - targetMaxIterations) > 0.1) {
     maxiterations = lerp(maxiterations, targetMaxIterations, transitionSpeed);
     needRecalculation = true;
   }
   
-  // Recalculate the Mandelbulb if needed 
   if (needRecalculation) {
     calculateMandelbulb(floor(DIM), floor(maxiterations));
   } else {
-    transitioning = true; // Stop transitioning once the target values are reached
+    transitioning = true; 
   }
 }
 
-
+//transitionToNewValues(100, 50);
