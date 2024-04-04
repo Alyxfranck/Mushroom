@@ -18,7 +18,7 @@ To install this project, follow these steps:
 
 ## Usage
 
-To use this project, open `Home.html` in your web browser.
+To use this project, run 'Python app.py' in your web browser.
 
 ## Contributing
 

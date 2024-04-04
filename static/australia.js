@@ -27,7 +27,7 @@ function calculateMandelbulb(DIM, maxiterations) {
         let y = map(j, 0, DIM, -2, 2);     
         let z = map(k, 0, DIM, -2, 2);
         let zeta = createVector(0, 0, 0);
-        let n = 2.3; 
+        let n = 2.686883786067037; 
         let iteration = 3;
         while (true) {
           let c = spherical(zeta.x, zeta.y, zeta.z);

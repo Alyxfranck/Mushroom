@@ -26,7 +26,7 @@ function calculateMandelbulb(DIM, maxiterations) {
         let y = map(j, 0, DIM, -2, 2);
         let z = map(k, 0, DIM, -2, 2);
         let zeta = createVector(0, 0, 0);
-        let n = 2.; 
+        let n = 2.686883786067037; 
         let iteration = 3;
         while (true) {
           let c = spherical(zeta.x, zeta.y, zeta.z);
@@ -61,7 +61,7 @@ function draw() {
   strokeWeight(0.01);
   noFill();
   rotateX(HALF_PI); // Rotate to make the Mandelbulb stand upright
-  rotateZ(frameCount * 0.005 ); // Add rotation around the Y-axis
+  rotateZ(frameCount * 0.002 ); // Add rotation around the Y-axis
  
  fetch('http://127.0.0.1:5000/mushrooms') 
     .then(response => response.json())
@@ -70,6 +70,7 @@ function draw() {
         if (newColor !== color) {
             transitioning = true;
             color = newColor;
+            stroke(clolor);
         }
     });
 
