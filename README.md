@@ -13,8 +13,8 @@ This project generates a Mandelbulb, a three-dimensional fractal that is a gener
 To install this project, follow these steps:
 
 1. Clone the repository: `git clone < https://github.com/Alyxfranck/Mushroom >`
-2. Navigate to the project directory: `cd <project-directory>`
-3. Install the necessary dependencies: `npm install` (if applicable)
+2. Navigate to the project directory: `cd <Mushroon-Main>`
+3. Install the necessary dependencies: `pip install requirements` (if applicable)
 
 ## Usage
 
