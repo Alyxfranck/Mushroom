@@ -1,12 +1,6 @@
 # Mandelbulb Generator
 
-This project is a Mandelbulb generator implemented in JavaScript.
-
-## Description
-
-This project generates a Mandelbulb, a three-dimensional fractal that is a generalization of the one-dimensional Mandelbrot set and two-dimensional Julia set.
-
-
+This project is a Mandelbulb generator implemented in JavaScript and Python. Seven different Mandelbulb instances are rendered in a Flask app, each receiving live weather data from the OpenWeather API. Each instance represents a mushroom that grows dynamically based on live data to its intended size and lifespan, then decays and regrows, repeating the cycle.
 
 ## Installation
 
