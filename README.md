@@ -15,6 +15,7 @@ To install this project, follow these steps:
 1. Clone the repository: `git clone < https://github.com/Alyxfranck/Mushroom >`
 2. Navigate to the project directory: `cd <Mushroon-Main>`
 3. Install the necessary dependencies: `pip install requirements` (if applicable)
+4. Add your OpenWeather API KEY to the Confing.cfg file 
 
 ## Usage
 
